@@ -27,7 +27,7 @@
   <link href="{{ asset('admin/assets/css/semi-dark.css') }}" rel="stylesheet" />
   <link href="{{ asset('admin/assets/css/header-colors.css') }}" rel="stylesheet" />
 
-  <title>Login</title>
+  <title>Admin</title>
 </head>
 
 <body>
