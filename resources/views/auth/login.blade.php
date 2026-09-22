@@ -13,6 +13,12 @@
                   <div class="card-body p-4 p-sm-5">
                     <h5 class="card-title">Sign In</h5>
                     <p class="card-text mb-5">See your growth and get consulting support!</p>
+                    @if ($errors->any())
+                        <div style="color:red">
+                            {{ $errors->first() }}
+                        </div>
+                    
+                    @endif
                     <form action="{{ route('login') }}" method="POST">
                       @csrf
                       <div class="login-separater text-center mb-4">

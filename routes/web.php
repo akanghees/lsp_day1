@@ -11,8 +11,11 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Landing\IndexController;
+use App\Http\Controllers\Landing\NewsController as LandingNewsController;
 
 Route::get('/', [IndexController::class, 'index'])->name('landing.index'); 
+Route::get('/berita', [LandingNewsController::class, 'index'])->name('news.index');
+Route::get('/berita/{news}', [LandingNewsController::class, 'show'])->name('news.show');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);

@@ -1,38 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <base href="{{ asset('landing-page/') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $schoolProfile->school_name ?? 'SMKN 1 Talaga' }} - Website Resmi</title>
+    <meta name="description"
+        content="Website Resmi {{ $schoolProfile->school_name ?? 'SMKN 1 Talaga' }}. Media informasi profil sekolah, berita, kegiatan ekstrakulikuler, galeri, dan civitas akademika.">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <title>Landing Page</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('landing-page/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!--
-
-TemplateMo 570 Chain App Dev
-
-https://templatemo.com/tm-570-chain-app-dev
-
--->
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('landing-page/assets/css/templatemo-chain-app-dev.css') }}">
-    <link rel="stylesheet" href="{{ asset('landing-page/assets/css/animated.css') }}">
-    <link rel="stylesheet" href="{{ asset('landing-page/assets/css/owl.css') }}">
-
+    <!-- Bootstrap -->
+    <link href="{{ asset('landing/assets/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="{{ asset('landing/assets/style.css') }}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{{ $schoolProfile && $schoolProfile->logo ? asset('storage/' . $schoolProfile->logo) : asset('landing/assets/hand-heart.png') }}">
 </head>
 
 <body>
