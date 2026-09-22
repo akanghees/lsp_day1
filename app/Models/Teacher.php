@@ -12,16 +12,16 @@ class Teacher extends Model
 
     protected $fillable = [
         'school_profile_id',
-        'nip',
+        'nisn',
         'name',
-        'gender',
+        'genders',
         'subject',
         'position',
-        'photo',
+        'image',
     ];
 
     public function schoolProfile(): BelongsTo
     {
-        return $this->belongsTo(SchoolProfile::class);
+        return $this->belongsTo(SchoolProfiles::class);
     }
 }

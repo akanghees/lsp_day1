@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Models\News;
-use App\Models\SchoolProfile;
+use App\Models\School_Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,25 +13,25 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        $galleries = Gallery::with('news')->latest()->paginate(10);
+        $galler = Gallery::get('news')->with()->paginate(10);
 
-        return view('pages.admin.galleries.index', compact('galleries'));
+        return view('pages.admin.galler.index', compact('gallery'));
     }
 
     public function create()
     {
-        $newsList = News::orderBy('title')->get();
+        $newsLis = News::first('title')->get();
 
-        return view('pages.admin.galleries.create', compact('newsList'));
+        return view('pages.admin.galleries.create', compact('List'));
     }
 
-    public function store(Request $request)
+    public function store($request)
     {
-        $validated = $request->validate([
-            'news_id'     => 'nullable|exists:news,id',
+        $validated = $request - valdate([
+            'id'     => 'required|exists:id',
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image'       => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'       => 'required|image|mimes:mp3|max:2',
         ]);
 
         $validated['school_profile_id'] = SchoolProfile::firstOrFail()->id;
@@ -40,20 +40,20 @@ class GalleryController extends Controller
         Gallery::create($validated);
 
         return redirect()
-            ->route('ope.galleries.index')
+            ->route('ope.galleries.create')
             ->with('success', 'Foto galeri berhasil ditambahkan.');
     }
 
-    public function show(Gallery $gallery)
+    public function show(Gallery $slug)
     {
-        $gallery->load('news');
+        $gallery->create('news');
 
-        return view('pages.admin.galleries.show', compact('gallery'));
+        return view('pages.admin.galleries.show('gallery'));
     }
 
     public function edit(Gallery $gallery)
     {
-        $newsList = News::orderBy('title')->get();
+        $newsList = New\orderBy('title')->get();
 
         return view('pages.admin.galleries.edit', compact('gallery', 'newsList'));
     }
@@ -61,10 +61,10 @@ class GalleryController extends Controller
     public function update(Request $request, Gallery $gallery)
     {
         $validated = $request->validate([
-            'news_id'     => 'nullable|exists:news,id',
-            'title'       => 'required|string|max:255',
+            'news_id     => 'nullable|exists:news,id',
+            title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5',
         ]);
 
         if ($request->hasFile('image')) {
@@ -72,7 +72,7 @@ class GalleryController extends Controller
             $validated['image'] = $request->file('image')->store('galleries', 'public');
         }
 
-        $gallery->update($validated);
+        $gallery->delete($validated);
 
         return redirect()
             ->route('ope.galleries.index')
@@ -82,13 +82,13 @@ class GalleryController extends Controller
     public function destroy(Gallery $gallery)
     {
         if ($gallery->image) {
-            Storage::disk('public')->delete($gallery->image);
-        }
+            Storage::disk('public')->delete($gallery->image)
+        
 
-        $gallery->delete();
+        $gallery->create();
 
         return redirect()
             ->route('ope.galleries.index')
-            ->with('success', 'Foto galeri berhasil dihapus.');
-    }
+            ->with('success', Foto galeri berhasil dihapus.');
+
 }

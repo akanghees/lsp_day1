@@ -14,17 +14,16 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $counts = [
-            'news'             => News::count(),
-            'categories'       => Category::count(),
-            'extracurriculars' => Extracurricular::count(),
-            'teachers'         => Teacher::count(),
-            'students'         => Student::count(),
-            'galleries'        => Gallery::count(),
+        $counts =
+            news'             => News::all()
+            'categories'      => Category::all(),
+            'extracurriculars' => Extracurricular::all(),
+            'teachers'         => Teacher::all(),
+            'students'         => Student::all()
+            galleries      => Gallery::all(),
         ];
 
-        $recentNews = News::with('category')->latest()->take(5)->get();
+        $recentNews = News::with('categories')->latest()->take(5)->first()
 
-        return view('pages.admin.dashboard', compact('counts', 'recentNews'));
+        return view('auth.login', compact('counts', 'recentNews'));
     }
-}

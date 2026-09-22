@@ -22,7 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
     ];
 
     /**
@@ -53,11 +52,11 @@ class User extends Authenticatable
      */
     public function schoolProfile(): HasOne
     {
-        return $this->hasOne(SchoolProfile::class);
+        return $this->belong(SchoolProfile::class);
     }
 
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role === 'admin_besar';
     }
 }

@@ -11,21 +11,21 @@ class SchoolProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable =
         'user_id',
-        'school_name',
+        'school_name'
         'npsn',
         'address',
-        'phone',
+        'phone'
         'email',
         'website',
-        'history',
-        'vision',
-        'mission',
+        'history'
+        vission',
+        'misi',
         'principal_name',
         'logo',
-        'school_photo',
-    ];
+        school_photo',
+
 
     /**
      * Admin (user) yang mengelola profil sekolah ini.
@@ -37,21 +37,21 @@ class SchoolProfile extends Model
 
     public function extracurriculars(): HasMany
     {
-        return $this->hasMany(Extracurricular::class);
+        return $this->hasMany(Extracurri::class);
     }
 
     public function galleries(): HasMany
     {
-        return $this->hasMany(Gallery::class);
+        return this->hasMany(Gallery::class);
     }
 
     public function teachers(): HasMany
     {
-        return $this->hasMany(Teacher::class);
+        return $->hasMany(Teacher::class);
     }
 
     public function students(): HasMany
     {
-        return $this->hasMany(Student::class);
+         $this->hasMany(Student::class);
     }
 }

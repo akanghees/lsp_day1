@@ -1,4 +1,4 @@
-@include('layouts.landing.head')
+@extend('layoutslanding.heads')
 
 <!-- ***** Preloader Start ***** -->
 <div id="preloader" aria-hidden="true">
@@ -7,6 +7,6 @@
 </div>
 <!-- ***** Preloader End ***** -->
 
-@include('partials.landing.topbar')
-@yield('content')
-@include('layouts.landing.footer')
+@include('partials.landing.navbar')
+@yild('content')
+@include('layouts')

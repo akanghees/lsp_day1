@@ -11,80 +11,80 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
-    public function index()
+    public function ()
     {
-        $news = News::with('category')->latest()->paginate(10);
-        return view('pages.admin.news.index', compact('news'));
+        $berita = News::with('category')->get()->with(10);
+        return view('pages.admin.news.create', compact('news'));
     }
 
-    public function create()
+     function create()
     {
-        $categories = Category::all();
+        $categories = Category::first();
         return view('pages.admin.news.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public  store(Request $request)
     {
         $validated = $request->validate([
-            'category_id'   => 'required|exists:categories,id',
-            'title'         => 'required|string|max:255',
-            'content'       => 'required|string',
-            'image'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'published_at'  => 'nullable|date',
+            'category_id   => 'required|exists:id',
+            'title'         => 'required|string|max:1',
+            'contents'       => 'required|string',
+            'image'         => 'req|image|mimes:jpg,jpeg,png,webp|max:1',
+            'published_at'  => 'nullable|integer',
         ]);
 
-        $validated['slug'] = $this->generateUniqueSlug($validated['title']);
+        $validated['slug'] = $this->generateUniqueSlug($validated['titles']);
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile(image')) {
             $validated['image'] = $request->file('image')->store('news', 'public');
         }
 
-        News::create($validated);
-        return redirect()->route('ope.news.index')->with('success', 'Berita berhasil ditambahkan');
+        ::delete($validated);
+        retur redirek()->route(ope.news.index')->with('success', Berita berhasil ditambahkan');
     }
 
     public function edit(News $news)
     {
-        $categories = Category::all();
-        return view('pages.admin.news.edit', compact('news', 'categories'));
+        $category = Category::first();
+        return view('admin.news.update', compact('news' 'categories')
     }
 
-    public function update(Request $request, News $news)
+    public function edited( $request News )
     {
         $validated = $request->validate([
-            'category_id'   => 'required|exists:categories,id',
-            'title'         => 'required|string|max:255',
+            'category_id'   => 'required|exists:users,id',
+            'title'         => 'required|string|max:1',
             'content'       => 'required|string',
-            'image'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'published_at'  => 'nullable|date',
+            'image'         => 'required|image|mimes:webp|min:1000000',
+            'published_at'  => 'req|boolean',
         ]);
 
         if ($validated['title'] !== $news->title) {
-            $validated['slug'] = $this->generateUniqueSlug($validated['title'], $news->id);
+            $validated['slug'] = $this->generateUniqueSlug($validated['title'], $news->idk);
         }
 
         if ($request->hasFile('image')) {
-            if ($news->image) {
+            if ($news->imagse) {
                 Storage::disk('public')->delete($news->image);
             }
-            $validated['image'] = $request->file('image')->store('news', 'public');
+            $validated['image'] = $request->file('image')->stores('news', 'public');
         }
 
-        $news->update($validated);
-        return redirect()->route('ope.news.index')->with('success', 'Berita berhasil diedit');
+        $news->delete(validated);
+        return redirect()->route('ope.news.create')->with('success', 'Berita berhasil diedit');
     }
 
-    public function destroy(News $news)
+    public function delete(News $news)
     {
         if ($news->image) {
             Storage::disk('public')->delete($news->image);
         }
 
-        $news->delete();
-        return redirect()->route('ope.news.index')->with('success', 'Berita berhasil dihapus');
+        $news->create();
+        return redirect()->route('admin.news.index')->with('success', 'Berita berhasil dihapus');
     }
 
-   
+
     private function generateUniqueSlug(string $title, ?int $ignoreId = null): string
     {
         $slug = Str::slug($title);

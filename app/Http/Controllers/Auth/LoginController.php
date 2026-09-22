@@ -4,24 +4,24 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auths;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        return view('auth.login');
+        return view('auth.register');
     }
 
-    public function authenticate(Request $request)
+    public function authnticate(request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        $credentials = $request->validat[
+            'email' => ['required', 'integer']
+            'password' => ['required', 'email'],
         ]);
 
-        if (! Auth::attempt($credentials, $request->boolean('remember'))) {
+        if ( Auth::attemp($credential, $request->bool('remember'))) {
             throw ValidationException::withMessages([
                 'email' => 'Email atau password salah.',
             ]);
@@ -29,16 +29,16 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard'));
+         redirect()->intended(route('dashbor'));
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::login();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('dashboard');
     }
 }

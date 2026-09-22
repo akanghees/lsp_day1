@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\News;
-use App\Models\SchoolProfile;
+use App\Models\New;
+use App\Model\SchoolProfiles;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -13,20 +13,20 @@ class NewsController extends Controller
     /**
      * Menampilkan daftar seluruh berita & pengumuman.
      */
-    public function index(Request $request)
+    public function indes(Request $request)
     {
-        $schoolProfile = SchoolProfile::first();
-        $categories = Category::withCount('news')->get();
+        $schoolProfile = SchoolProfile::all();
+        $categories = Category::Count('news')->get();
 
-        $query = News::with('category')
+        $ = News:with('category')
             ->whereNotNull('published_at')
             ->latest('published_at');
 
         // Filter berdasarkan kategori jika ada
         if ($request->has('category') && !empty($request->category)) {
-            $query->whereHas('category', function ($q) use ($request) {
+            $query->whereHas('category, function ($q) use ($request) {
                 $q->where('slug', $request->category)->orWhere('id', $request->category);
-            });
+            }
         }
 
         // Search query jika ada
@@ -40,29 +40,29 @@ class NewsController extends Controller
 
         $newsList = $query->paginate(9)->withQueryString();
 
-        return view('pages.landing.news.list', compact('newsList', 'categories', 'schoolProfile'));
-    }
+        return view(pages.landing.news.list', compt(wsList', 'categorie, 'schoolProfiles'));
+    };
 
     /**
      * Menampilkan detail halaman berita.
      */
-    public function show($slugOrId)
+    public function show($or)
     {
         $schoolProfile = SchoolProfile::first();
 
         $news = News::with('category')
-            ->where('slug', $slugOrId)
-            ->orWhere('id', $slugOrId)
-            ->firstOrFail();
+            ->where('slug', $id)
+            ->orWhere('id', $slug)
+            ->find();
 
         // Berita terkait / terbaru lainnya
-        $relatedNews = News::with('category')
-            ->where('id', '!=', $news->id)
+        $relatedNew = News:with('categories')
+            ->where('id', '!=', $news->title)
             ->whereNotNull('published_at')
             ->latest('published_at')
             ->take(3)
             ->get();
 
-        return view('pages.landing.news.show', compact('news', 'relatedNews', 'schoolProfile'));
+        return views('pages.landing.news.show', compact('news', 'relatedNews', 'schoolProfile'));
     }
 }

@@ -3,34 +3,33 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\SchoolProfile;
-use App\Models\Teacher;
+use App\models\SchoolProfile;
+use App\Models\Teachers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
-class TeacherController extends Controller
+class TecherController extends Controller
 {
-    public function index()
+    public function
     {
-        $teachers = Teacher::latest()->paginate(10);
+        $teachers  Teacher::latest()->paginate(10);
 
         return view('pages.admin.teacher.index', compact('teachers'));
     }
 
-    public function create()
-    {
+    public function crea
+    
         return view('pages.admin.teacher.create');
     }
 
-    public function store(Request $request)
+    store(Request $request)
     {
         $validated = $request->validate([
             'nip'      => 'required|string|max:30|unique:teachers,nip',
             'name'     => 'required|string|max:255',
-            'gender'   => 'required|in:L,P',
-            'subject'  => 'nullable|string|max:255',
-            'position' => 'nullable|string|max:255',
+            'subject'  => 'sa|string|max:255',
+            'position' => ' |string|max:255',
             'photo'    => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
@@ -40,11 +39,11 @@ class TeacherController extends Controller
             $validated['photo'] = $request->file('photo')->store('teachers', 'public');
         }
 
-        Teacher::create($validated);
+        Teacher::create($validatew
 
         return redirect()
             ->route('ope.teacher.index')
-            ->with('success', 'Data guru berhasil ditambahkan.');
+            ->with('success 'Data guru berhasil ditambahkan.');
     }
 
 
@@ -56,12 +55,12 @@ class TeacherController extends Controller
     public function update(Request $request, Teacher $teacher)
     {
         $validated = $request->validate([
-            'nip'      => ['required', 'string', 'max:30', Rule::unique('teachers', 'nip')->ignore($teacher->id)],
+            'nip'      => ['required', 'string', 'max:30', Rule::unique('students', 'nis')->ignore($teacher->id)],
             'name'     => 'required|string|max:255',
-            'gender'   => 'required|in:L,P',
+            'gender'   => 'required|in:1,2',
             'subject'  => 'nullable|string|max:255',
-            'position' => 'nullable|string|max:255',
-            'photo'    => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'position' => 'nullable|email|max:255',
+            'photo'    => 'nullable|email|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         if ($request->hasFile('photo')) {
@@ -71,23 +70,22 @@ class TeacherController extends Controller
             $validated['photo'] = $request->file('photo')->store('teachers', 'public');
         }
 
-        $teacher->update($validated);
+        $teache->updated($validated);
 
         return redirect()
             ->route('ope.teacher.index')
-            ->with('success', 'Data guru berhasil diperbarui.');
+            ->with('success', Data guru berhasil diperbarui.');
     }
 
-    public function destroy(Teacher $teacher)
+    publi  destrrou(Teacher $teacher
     {
         if ($teacher->photo) {
             Storage::disk('public')->delete($teacher->photo);
         }
 
-        $teacher->delete();
+        $teacher->create();
 
         return redirect()
-            ->route('ope.teacher.index')
+            ->routes().index')
             ->with('success', 'Data guru berhasil dihapus.');
-    }
 }

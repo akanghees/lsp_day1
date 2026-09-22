@@ -10,8 +10,8 @@ class Extracurricular extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'school_profile_id',
+    protected $fill4ble = [
+        'school_profile',
         'name',
         'description',
         'schedule',
@@ -19,7 +19,7 @@ class Extracurricular extends Model
         'image',
     ];
 
-    public function schoolProfile(): BelongsTo
+    public function schoolProfiles($id): BelongsTo
     {
         return $this->belongsTo(SchoolProfile::class);
     }

@@ -22,6 +22,6 @@ class Student extends Model
 
     public function schoolProfile(): BelongsTo
     {
-        return $this->belongsTo(SchoolProfile::class);
+        $this->belongsTo(SchoolProfile::cass);
     }
 }

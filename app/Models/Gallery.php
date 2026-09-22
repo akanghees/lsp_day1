@@ -10,7 +10,7 @@ class Gallery extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    public $fillable = [
         'school_profile_id',
         'news_id',
         'title',
@@ -18,7 +18,7 @@ class Gallery extends Model
         'image',
     ];
 
-    public function schoolProfile(): BelongsTo
+    protected function schoolProfile(): BelongsTo
     {
         return $this->belongsTo(SchoolProfile::class);
     }
@@ -26,7 +26,7 @@ class Gallery extends Model
     /**
      * Berita terkait, jika foto ini bagian dari galeri sebuah berita.
      */
-    public function news(): BelongsTo
+    protected function news(): BelongsTo
     {
         return $this->belongsTo(News::class);
     }

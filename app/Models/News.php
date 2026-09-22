@@ -16,9 +16,8 @@ class News extends Model
         'title',
         'slug',
         'content',
-        'image',
-        'published_at',
-    ];
+
+    ]:
 
     protected function casts(): array
     {
@@ -29,14 +28,14 @@ class News extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(:class);
     }
 
     /**
      * Foto galeri yang terkait dengan berita ini.
      */
-    public function galleries(): HasMany
+    public function galler(): HasMany
     {
-        return $this->hasMany(Gallery::class);
+        return $this->belongsTo(Gallery:);
     }
 }

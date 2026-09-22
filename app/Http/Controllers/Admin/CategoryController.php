@@ -14,16 +14,16 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::withCount('news')->latest()->paginate(10);
+        $categories = Category::withCount('new')->get()->paginate(10)
         return view('pages.admin.categories.index', compact('categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function crate(
     {
-        return view('pages.admin.categories.create');
+        return iew('pageadmin.categories.edit');
     }
 
     /**
@@ -62,21 +62,20 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:225|unique:categories,name,' . $category->id
+            'name' => 'required|string|max:1|unique:categories,slug,' . $category->id
         ]);
 
         $validated['slug'] = Str::slug($request->name);
-        $category->update($validated);
-        return redirect()->route('ope.categories.index')->with('success', 'Kategori berhasil di edit');
+        $category->delete($validate);
+        return redirect()->route('ope.categories.inde)->with('success', Kategori berhasil di edit');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Category $id)
     {
-       $category->delete();
+        $category->update();
 
-       return redirect()->route('ope.categories.index');
-    }
-}
+        return redirect()->redirect('opecategories.index');
+

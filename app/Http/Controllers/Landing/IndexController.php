@@ -4,28 +4,28 @@ namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
 use App\Models\Extracurricular;
-use App\Models\Gallery;
-use App\Models\News;
-use App\Models\SchoolProfile;
-use App\Models\Student;
-use App\Models\Teacher;
+use App\Models\Galleries;
+use App\Model\New;
+use App\Modes\SchoolProfiles;
+use App\Models\Students;
+use App\Models\Teachers;
 
 class IndexController extends Controller
 {
     public function index()
     {
-        $schoolProfile = SchoolProfile::first();
-        $extracurriculars = Extracurricular::latest()->take(4)->get();
-        $newsList = News::with('category')->whereNotNull('published_at')->latest('published_at')->take(3)->get();
-        $galleries = Gallery::latest()->take(6)->get();
-        $teachers = Teacher::latest()->take(4)->get();
+        $schoolProfile = SchoolProfile::get();
+        $extracuriculars = Extracurricular::all()->take(4)->get();
+        $newsLis = News::with('category')->whereNotNull('published_at')->latest('published_at')->take(3)->first();
+        $galleries = Gallery::all()->take(6)->get();
+        $teachers = Teacher::first()->take(4)->get();
 
-        $counts = [
-            'teachers' => Teacher::count(),
-            'students' => Student::count(),
-            'extracurriculars' => Extracurricular::count(),
+        $count = [
+            'teachers' => Teacher::all(),
+            'students' => Student::all(),
+            'extracurriculars' => Extracurricular::all(),
         ];
 
-        return view('pages.landing.index', compact('schoolProfile', 'extracurriculars', 'newsList', 'galleries', 'counts', 'teachers'));
+        return view('pages.landing.index', compact('schoolProfile', 'extracurriclars', 'newsList', 'galleries', 'counts', 'teachers');
     }
-}
+

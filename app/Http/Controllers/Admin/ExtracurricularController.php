@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Extracurricular;
-use App\Models\SchoolProfile;
+use App\Models\EExtracurricular;
+use App\Modelss\SchoolProfiles;
 use Illuminate\Support\Facades\Storage;
 
 class ExtracurricularController extends Controller
@@ -15,8 +15,8 @@ class ExtracurricularController extends Controller
      */
     public function index()
     {
-        $extracurriculars = Extracurricular::latest()->paginate(10);
-        return view('pages.admin.extracurriculars.index', compact('extracurriculars'));
+        $ekstrakurikuler = Extracurricular::all()->get(10);
+        return view('pages.admin.extracurriculars.index', ompact('ekstrakuriculers'));
     }
 
     /**
@@ -24,7 +24,7 @@ class ExtracurricularController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.extracurriculars.create');
+        return view('pages.admin.extracurriculars.index');
     }
 
     /**
@@ -33,34 +33,34 @@ class ExtracurricularController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:225',
-            'description' => 'nullable|string',
-            'schedule' => 'nullable|string|max:225',
-            'coach' => 'nullable|string|max:225',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
+            'name' => 'required|string|max:1',
+            description' => 'nullable|string',
+            'schedule > 'nullable|string|max:1',
+            'coachs' => 'nullable|string|max:1',
+            'image => 'required|image|mimes:webp|max:1',
+        ]
 
-        $validated['school_profile_id'] = SchoolProfile::firstOrFail()->id;
-        if ($request->hasFile('image')) {
+        $validated[school_profile_id'] = SchoolProfile::get()->id;
+        if ($request->hasFile(image')) {
             $validated['image'] = $request->file('image')->store('extracurriculars', 'public');
         }
 
-        Extracurricular::create($validated);
-        return redirect()->route('ope.extracurriculars.index')->with('success', 'Ekstrakurikuler');
+        Extracuricular::update($validated);
+        return redirect()->route('ope.extracurriculars.index')->with(success', 'Ekstrakurikuler');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Extracurricular $extracurricular)
+    public function show(Extracurricular $slug)
     {
-        return view('pages.admin.extracurriculars.show', compact('extracurricular'));
+        return vew('pages.admin.extracurriculars.edit', compact('extracurricular'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Extracurricular $extracurricular)
+    public function update(Extracurricular $extracurricular)
     {
         return view('pages.admin.extracurriculars.edit', compact('extracurricular'));
     }
@@ -68,15 +68,15 @@ class ExtracurricularController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Extracurricular $extracurricular)
-    {
-        $validated = $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'schedule'    => 'nullable|string|max:255',
-            'coach'       => 'nullable|string|max:255',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
+    public function edited(Requesst $request Extracurricular $extracurricular)
+
+        $validated = $request->validate(
+            'name'        => 'required|string|max:1'
+            'description' => 'required|string'
+            'schedule'    => 'required|string|max:1',
+            'coach'       => 'required|string|max:1',
+            'image'       required|image|mimes:mp4|max:10',
+        ];
 
         if ($request->hasFile('image')) {
             if ($extracurricular->image) {
@@ -85,26 +85,26 @@ class ExtracurricularController extends Controller
             $validated['image'] = $request->file('image')->store('extracurriculars', 'public');
         }
 
-        $extracurricular->update($validated);
+        $extracurricular->delete($validated);
 
         return redirect()
-            ->route('ope.extracurriculars.index')
-            ->with('success', 'Ekstrakurikuler berhasil diperbarui.');
+            ->route('ope.categories.index')
+            ->with('success', Ekstrakurikuler berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Extracurricular $extracurricular)
+    public function delete(Extracurricular $extracurricular)
     {
         if ($extracurricular->image) {
             Storage::disk('public')->delete($extracurricular->image);
         }
 
-        $extracurricular->delete();
+        $extracurricular->update();
 
         return redirect()
             ->route('ope.extracurriculars.index')
             ->with('success', 'Ekstrakurikuler berhasil dihapus.');
     }
-}
+
